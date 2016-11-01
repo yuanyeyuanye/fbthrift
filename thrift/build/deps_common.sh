@@ -14,7 +14,7 @@ install_mstch() {
   fi
   cd mstch
   cmake .
-  make
+  make -j`nproc --all`
   sudo make install
   popd
 }
@@ -25,7 +25,7 @@ install_zstd() {
     git clone https://github.com/facebook/zstd
   fi
   cd zstd
-  make
+  make -j`nproc --all`
   sudo make install
   popd
 }
@@ -33,7 +33,7 @@ install_zstd() {
 install_folly() {
   pushd .
   if [[ ! -e "folly" ]]; then
-    git clone https://github.com/facebook/folly
+    git clone https://github.com/yuanyeyuanye/folly
   fi
   cd folly/folly
   FOLLY_VERSION="$(cat "$BUILD_DIR"/FOLLY_VERSION)"  # on own line for set -e
@@ -45,7 +45,7 @@ install_folly() {
   fi
   autoreconf -if
   ./configure
-  make
+  make -j`nproc --all`
   sudo make install
   sudo ldconfig
   popd
@@ -60,7 +60,7 @@ install_wangle() {
   WANGLE_VERSION="$(cat "$BUILD_DIR"/WANGLE_VERSION)"
   git checkout "$WANGLE_VERSION"
   cmake .
-  make
+  make -j`nproc --all`
   sudo make install
   popd
 }
